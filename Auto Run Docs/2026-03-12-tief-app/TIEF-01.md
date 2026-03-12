@@ -171,7 +171,7 @@ supabase/
 
 Create each directory with `mkdir -p`. Add a `.gitkeep` in empty leaf directories so git tracks them. Do NOT create any component files yet — only the directory structure.
 
-- [ ] **Configure app.json, eas.json, tsconfig.json, and babel.config.js.** Update the files as follows:
+- [x] **Configure app.json, eas.json, tsconfig.json, and babel.config.js.** Update the files as follows:
 
 **app.json** — Set:
 - `name`: `"tief."`
