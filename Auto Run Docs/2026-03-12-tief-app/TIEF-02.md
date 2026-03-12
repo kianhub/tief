@@ -17,7 +17,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create theme constants in `src/constants/theme.ts`.** This is the single source of truth for the entire design system. Include:
+- [x] **Create theme constants in `src/constants/theme.ts`.** This is the single source of truth for the entire design system. Include:
 
 **Colors** — Two complete palettes, `light` and `dark`, per spec §2.0.2:
 ```
