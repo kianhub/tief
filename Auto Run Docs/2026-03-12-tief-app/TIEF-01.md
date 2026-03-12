@@ -139,7 +139,7 @@ This creates `.oxlintrc.json`. Replace its contents with:
 
 5. Verify by running `npm run lint` — it should complete without errors on the fresh project.
 
-- [ ] **Create full directory structure per spec §16.** Create all directories and placeholder index files:
+- [x] **Create full directory structure per spec §16.** Create all directories and placeholder index files:
 
 ```
 src/
