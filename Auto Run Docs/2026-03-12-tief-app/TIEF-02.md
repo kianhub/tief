@@ -92,7 +92,7 @@ export const VOICE_SETTINGS = {
 } as const;
 ```
 
-- [ ] **Create `useTheme` hook in `src/hooks/useTheme.tsx`.** Implement a ThemeProvider + useTheme hook:
+- [x] **Create `useTheme` hook in `src/hooks/useTheme.tsx`.** Implement a ThemeProvider + useTheme hook:
 
 1. Create a `ThemeContext` with React Context
 2. `ThemeProvider` component that:

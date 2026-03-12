@@ -27,7 +27,7 @@ export const colors = {
   },
 } as const;
 
-export type ColorPalette = typeof colors.light;
+export type ColorPalette = { readonly [K in keyof typeof colors.light]: string };
 
 export const typography = {
   display: {
