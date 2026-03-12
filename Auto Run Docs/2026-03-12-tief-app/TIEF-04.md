@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create AuthContext provider in `src/lib/auth-context.tsx`.** This manages the full auth lifecycle:
+- [x] **Create AuthContext provider in `src/lib/auth-context.tsx`.** *Completed: full auth lifecycle with session restore, onAuthStateChange, email/password sign-in/up, Apple Sign In via signInWithIdToken, sign-out, and profile fetch/create.* This manages the full auth lifecycle:
 
 ```typescript
 interface AuthContextType {
@@ -48,7 +48,7 @@ Wrap children in `AuthContext.Provider`. Export `AuthProvider` and `useAuth` hoo
 
 Handle errors gracefully — catch auth errors and log them. Do NOT crash the app on auth failure.
 
-- [ ] **Create sign-in screen at `src/app/(auth)/sign-in.tsx` and sign-up screen at `src/app/(auth)/sign-up.tsx`.** Also create the auth layout at `src/app/(auth)/_layout.tsx`.
+- [x] **Create sign-in screen at `src/app/(auth)/sign-in.tsx` and sign-up screen at `src/app/(auth)/sign-up.tsx`.** *Completed: minimal centered layouts with display serif branding, Apple Sign In button (iOS), email/password forms, inline error display, loading states, and navigation links between screens.* Also create the auth layout at `src/app/(auth)/_layout.tsx`.
 
 **`(auth)/_layout.tsx`:**
 - Simple Stack layout with no headers (`headerShown: false`)
@@ -80,7 +80,7 @@ Handle errors gracefully — catch auth errors and log them. Do NOT crash the ap
 
 Use `useAuth()` hook for all auth operations. Use `router.replace` for navigation after auth. Import UI components from `@/components/ui`.
 
-- [ ] **Create auth and onboarding route guards in root layout.** Create `src/app/_layout.tsx`:
+- [x] **Create auth and onboarding route guards in root layout.** *Completed: root layout with ThemeProvider > AuthProvider > DatabaseProvider > SplashGate, splash screen until auth resolves, index redirect route, auth/onboarding/tabs layouts with guard redirects, db-context.tsx with DatabaseProvider and useDatabase hook. `npx tsc --noEmit` passes.* Create `src/app/_layout.tsx`:
 
 This is the root layout that wraps the entire app. It should:
 
