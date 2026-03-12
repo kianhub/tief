@@ -14,6 +14,7 @@
     "@elevenlabs/react-native": "^0.5.11",
     "@livekit/react-native": "^2.9.6",
     "@livekit/react-native-webrtc": "^137.0.2",
+    "@react-native-community/netinfo": "^11.5.2",
     "@shopify/react-native-skia": "^2.4.18",
     "@supabase/supabase-js": "^2.99.1",
     "date-fns": "^4.1.0",

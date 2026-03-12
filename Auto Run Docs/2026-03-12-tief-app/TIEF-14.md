@@ -98,7 +98,8 @@ interface SettingsRowProps {
 - List of options with radio indicators
 - Currently selected option highlighted
 
-- [ ] **Create the sync engine at `src/lib/sync.ts`.** Bidirectional sync between expo-sqlite and Supabase per spec §3.6:
+- [x] **Create the sync engine at `src/lib/sync.ts`.** Bidirectional sync between expo-sqlite and Supabase per spec §3.6:
+> Completed: Created `src/lib/sync.ts` with full bidirectional sync engine. Push functions query local SQLite for records where `synced_at IS NULL` and upsert to Supabase (conversations, messages, blog posts). Pull functions query Supabase for records updated since `last_sync_at`, insert or update locally with last-write-wins conflict resolution. Blog posts handle format conversion (PostgreSQL arrays ↔ JSON strings, booleans ↔ integers). Includes `subscribeToBlogUpdates()` Realtime subscription for live blog status changes (generating → ready). Installed `@react-native-community/netinfo` for connectivity detection. No TypeScript or lint errors.
 
 ```typescript
 import { supabase } from './supabase';
