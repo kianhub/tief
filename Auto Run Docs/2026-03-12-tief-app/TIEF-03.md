@@ -15,7 +15,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create TypeScript types for all entities in `src/types/index.ts`.** Define interfaces matching both the local SQLite schema and the Supabase schema. All `id` fields are `string` (UUIDs). All timestamps are ISO 8601 strings locally. Include:
+- [x] **Create TypeScript types for all entities in `src/types/index.ts`.** *(Completed: all entity interfaces, union types, composite helpers, and `parseTags`/`stringifyTags` utilities defined. `TopicCategory` re-exported from `@/constants/categories`. No TS errors.)* Define interfaces matching both the local SQLite schema and the Supabase schema. All `id` fields are `string` (UUIDs). All timestamps are ISO 8601 strings locally. Include:
 
 ```typescript
 // Conversation status
