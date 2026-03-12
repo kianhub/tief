@@ -136,7 +136,8 @@ For the conversation start: consider a shared element transition from the prompt
 - Each screen slides in with spring physics
 - Elements on each screen fade + slide in with staggered timing
 
-- [ ] **Set up Jest testing framework and write unit tests.** Configure Jest with React Native preset:
+- [x] **Set up Jest testing framework and write unit tests.** Configure Jest with React Native preset:
+> Completed: Installed jest@29, jest-expo@55, babel-preset-expo, and @types/jest. Created jest.config.js with jest-expo preset and `@/` path alias. Wrote 70 unit tests across 5 test suites: db-helpers (mock SQLite — conversations, messages, blog posts, preferences), time-utils (getGreeting with fake timers, formatDuration, formatRelativeTime), prompt-builder (placeholder filling, section validation, empty fields), theme (color palettes, typography variants, spring configs, spacing, radii), and text-utils (slugify, parseTags/stringifyTags round-trip). All 70 tests pass.
 
 **Install test dependencies:**
 ```bash
