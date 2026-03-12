@@ -56,7 +56,7 @@ breathe: { damping: 10, stiffness: 30, mass: 1.5 }
 
 Export everything as typed constants. Use `as const` for type safety.
 
-- [ ] **Create category constants in `src/constants/categories.ts` and voice constants in `src/constants/voices.ts`.**
+- [x] **Create category constants in `src/constants/categories.ts` and voice constants in `src/constants/voices.ts`.**
 
 **categories.ts** — Array of 10 topic categories per spec §2.0.2, plus a "Random" option:
 ```typescript
