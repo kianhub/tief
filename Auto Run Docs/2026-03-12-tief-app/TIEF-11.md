@@ -21,7 +21,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create `supabase/functions/proxy-claude/index.ts` — Authenticated Claude API proxy with streaming.** This edge function authenticates the user and streams Claude API responses back:
+- [x] **Create `supabase/functions/proxy-claude/index.ts` — Authenticated Claude API proxy with streaming.** This edge function authenticates the user and streams Claude API responses back:
 
 ```typescript
 // Deno edge function
