@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create the VoiceOrb component at `src/components/conversation/VoiceOrb.tsx` using @shopify/react-native-skia.** This is the centerpiece visual of the app.
+- [x] **Create the VoiceOrb component at `src/components/conversation/VoiceOrb.tsx` using @shopify/react-native-skia.** This is the centerpiece visual of the app.
 
 The orb should feel organic, blobby, and alive — NOT a perfect circle. Think: a drop of ink in water.
 
@@ -91,7 +91,7 @@ Use `useDerivedValue` from reanimated to compute the path string on the UI threa
 
 Make sure all animations are on the UI thread (shared values + worklets). No JS thread animation.
 
-- [ ] **Create the voice conversation UI at `src/components/conversation/VoiceConversationView.tsx`.**
+- [x] **Create the voice conversation UI at `src/components/conversation/VoiceConversationView.tsx`.**
 
 Per spec §4.3, this is a full-screen immersive view:
 
@@ -144,7 +144,7 @@ interface VoiceConversationViewProps {
 
 Use reanimated for all animations. Use `useSafeAreaInsets()` for safe area handling.
 
-- [ ] **Create audio-reactive animation bridge.** The VoiceOrb needs real-time audio amplitude data. Create `src/hooks/useAudioAmplitude.ts`:
+- [x] **Create audio-reactive animation bridge.** The VoiceOrb needs real-time audio amplitude data. Create `src/hooks/useAudioAmplitude.ts`:
 
 This hook bridges the ElevenLabs SDK audio events to a reanimated shared value:
 
@@ -169,3 +169,7 @@ interface UseAudioAmplitudeReturn {
 Also create a simple fallback: if ElevenLabs SDK doesn't provide amplitude data directly, use the `onModeChange` callback to at least toggle between states (idle/listening/speaking). In that case, simulate amplitude with a gentle sine wave while in active states.
 
 Verify the orb renders and animates in idle state. The voice integration can be verified once ElevenLabs is configured (per useractions). `npx tsc --noEmit` should pass.
+
+---
+
+**Completed 2026-03-12.** All three tasks implemented: VoiceOrb with 8-point catmull-rom blob, 4 animation states, and Skia gradient; VoiceConversationView with full-screen layout, transcript, and haptic controls; useAudioAmplitude with EMA smoothing and sine wave fallback. `npx tsc --noEmit` passes clean.
