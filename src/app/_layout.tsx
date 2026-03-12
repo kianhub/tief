@@ -6,6 +6,7 @@ import * as Notifications from 'expo-notifications';
 import { ElevenLabsProvider } from '@elevenlabs/react-native';
 
 import { ThemeProvider } from '@/hooks/useTheme';
+import { SyncProvider } from '@/hooks/useSync';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
 import { DatabaseProvider } from '@/lib/db-context';
 import {
@@ -82,11 +83,13 @@ export default function RootLayout() {
       <AuthProvider>
         <NotificationSetup />
         <DatabaseProvider>
-          <ElevenLabsProvider>
-            <SplashGate>
-              <Slot />
-            </SplashGate>
-          </ElevenLabsProvider>
+          <SyncProvider>
+            <ElevenLabsProvider>
+              <SplashGate>
+                <Slot />
+              </SplashGate>
+            </ElevenLabsProvider>
+          </SyncProvider>
         </DatabaseProvider>
       </AuthProvider>
     </ThemeProvider>

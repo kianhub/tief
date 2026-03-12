@@ -22,6 +22,7 @@ import { isThisWeek, isThisMonth, subWeeks, isWithinInterval, startOfWeek, endOf
 import { ThemedText, ThemedView, Button, Chip } from '@/components/ui';
 import { BlogCard } from '@/components/blog/BlogCard';
 import { useTheme } from '@/hooks/useTheme';
+import { useSync } from '@/hooks/useSync';
 import { useDatabase } from '@/lib/db-context';
 import { getAllBlogPosts, searchBlogPosts } from '@/lib/db-helpers';
 import { CATEGORIES } from '@/constants/categories';
@@ -71,12 +72,12 @@ export default function LibraryScreen() {
   const router = useRouter();
   const db = useDatabase();
   const { colors, typography, radii } = useTheme();
+  const { isSyncing, syncNow } = useSync();
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null);
   const [searchMode, setSearchMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
   const searchInputRef = useRef<RNTextInput>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -135,11 +136,10 @@ export default function LibraryScreen() {
   }, [loadPosts]);
 
   const handleRefresh = useCallback(async () => {
-    setRefreshing(true);
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await syncNow();
     loadPosts();
-    setRefreshing(false);
-  }, [loadPosts]);
+  }, [syncNow, loadPosts]);
 
   const handlePostPress = useCallback(
     (postId: string) => {
@@ -264,7 +264,7 @@ export default function LibraryScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={isSyncing}
             onRefresh={handleRefresh}
             tintColor={colors.textSecondary}
           />

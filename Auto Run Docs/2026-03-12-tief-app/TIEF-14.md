@@ -176,7 +176,8 @@ When a blog post status changes from 'generating' to 'ready' on the server, the 
 1. Updates the local DB record
 2. Triggers a re-render in the library/home screen (the blog status indicator changes from ⏳ to ✓)
 
-- [ ] **Create `useSync` hook at `src/hooks/useSync.ts` and integrate into the app.**
+- [x] **Create `useSync` hook at `src/hooks/useSync.ts` and integrate into the app.**
+> Completed: Created `src/hooks/useSync.tsx` with SyncProvider context and useSync consumer hook. Tracks isSyncing/lastSyncAt/error state. syncNow calls syncAll(db, userId) with guard against concurrent syncs. Sets up three automatic sync triggers: (1) AppState listener syncs when app foregrounds (throttled to 60s), (2) NetInfo listener syncs on network reconnection, (3) Supabase Realtime subscription updates local DB when blog posts change server-side. Initial sync fires on mount when user is authenticated and onboarded. Integrated SyncProvider into root layout inside DatabaseProvider. Updated library screen pull-to-refresh to call syncNow then reload posts, using isSyncing for RefreshControl state with Light haptic feedback. No TypeScript errors.
 
 ```typescript
 interface UseSyncReturn {
