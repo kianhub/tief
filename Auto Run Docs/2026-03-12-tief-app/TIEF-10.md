@@ -134,7 +134,9 @@ interface EndConversationModalProps {
    This is fire-and-forget — don't await the blog generation itself.
 5. Subscribe to blog post status changes via Supabase Realtime (handled in sync layer)
 
-- [ ] **Create conversation initiation flow helpers.** Create `src/lib/conversation-starter.ts`:
+- [x] **Create conversation initiation flow helpers.** Create `src/lib/conversation-starter.ts`:
+
+> Completed: Created `src/lib/conversation-starter.ts` with four exported functions: `startFromPrompt`, `startFromCustomTopic`, `startFromNotification`, and `resumeConversation`. Each generates a UUID and navigates via `router.push()`. Updated home screen `(tabs)/index.tsx` to use `startFromPrompt` for PromptCard handlers, `startFromCustomTopic` for free-form input, and `resumeConversation` for recent conversation press. Updated `conversation/[id].tsx` initialization to detect new conversations by `topic` param presence (instead of `id === 'new'`). `npx tsc --noEmit` passes.
 
 This module handles the different ways a conversation can be started:
 

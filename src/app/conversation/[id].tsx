@@ -94,7 +94,8 @@ export default function ConversationScreen() {
     if (initRef.current || conversation.phase !== 'idle') return;
     initRef.current = true;
 
-    if (id === 'new' && topic) {
+    if (topic) {
+      // New conversation — topic param indicates a fresh start
       conversation
         .startConversation({
           mode: initialMode || 'text',
@@ -105,6 +106,7 @@ export default function ConversationScreen() {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
         });
     } else if (id && id !== 'new') {
+      // Resume existing conversation from DB
       const existing = getConversationRecord(db, id);
       if (existing && existing.status === 'active') {
         conversation.resumeConversation(id);

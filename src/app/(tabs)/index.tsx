@@ -11,6 +11,11 @@ import { useAuth } from '@/lib/auth-context';
 import { useDatabase } from '@/lib/db-context';
 import { getConversationsWithBlogStatus, getPreference } from '@/lib/db-helpers';
 import { getGreeting } from '@/lib/time-utils';
+import {
+  startFromPrompt,
+  startFromCustomTopic,
+  resumeConversation,
+} from '@/lib/conversation-starter';
 import { spacing } from '@/constants/theme';
 import type { BlogPostStatus, Conversation, TopicCategory } from '@/types';
 
@@ -65,27 +70,17 @@ export default function HomeScreen() {
   const greeting = `${getGreeting()}, ${displayName}.`;
 
   const handleVoice = () => {
-    const params = new URLSearchParams({
-      topic: featuredPrompt,
-      mode: 'voice',
-    });
-    if (featuredCategory) params.set('category', featuredCategory);
-    router.push(`/conversation/new?${params.toString()}`);
+    startFromPrompt(featuredPrompt, featuredCategory ?? 'random', 'voice');
   };
 
   const handleText = () => {
-    const params = new URLSearchParams({
-      topic: featuredPrompt,
-      mode: 'text',
-    });
-    if (featuredCategory) params.set('category', featuredCategory);
-    router.push(`/conversation/new?${params.toString()}`);
+    startFromPrompt(featuredPrompt, featuredCategory ?? 'random', 'text');
   };
 
   const handleTopicSubmit = () => {
     const trimmed = topicInput.trim();
     if (trimmed) {
-      router.push(`/conversation/new?topic=${encodeURIComponent(trimmed)}&mode=text`);
+      startFromCustomTopic(trimmed, 'text');
       setTopicInput('');
     }
   };
@@ -95,7 +90,7 @@ export default function HomeScreen() {
     if (convo?.blog_status === 'ready') {
       router.push(`/post/${id}`);
     } else {
-      router.push(`/conversation/${id}`);
+      resumeConversation(id);
     }
   };
 
