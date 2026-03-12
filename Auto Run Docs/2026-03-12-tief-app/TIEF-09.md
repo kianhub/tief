@@ -114,7 +114,7 @@ interface TextConversationViewProps {
 4. Message appears in list (from messages state update)
 5. AI streaming response starts appearing
 
-- [ ] **Create a `MessageInput` component at `src/components/conversation/MessageInput.tsx`.** Extract the input bar for reusability:
+- [x] **Create a `MessageInput` component at `src/components/conversation/MessageInput.tsx`.** ✅ Extracted from TextConversationView into standalone component with full interface (onSend, onVoicePress, placeholder, disabled), haptic feedback on send (`impactAsync(Light)`), animated send button, and PressableScale. `npx tsc --noEmit` passes. Extract the input bar for reusability:
 
 ```typescript
 interface MessageInputProps {

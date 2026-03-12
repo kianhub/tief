@@ -5,7 +5,6 @@ import {
   Platform,
   Pressable,
   StyleSheet,
-  TextInput as RNTextInput,
   View,
 } from 'react-native';
 import Animated, {
@@ -20,6 +19,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from '@/components/ui';
 import { ChatBubble } from './ChatBubble';
+import { MessageInput } from './MessageInput';
 import type { Message } from '@/types';
 
 export interface TextConversationViewProps {
@@ -69,85 +69,6 @@ function PressableScale({
     >
       {children}
     </AnimatedPressable>
-  );
-}
-
-function MessageInput({
-  onSend,
-  onVoicePress,
-  disabled,
-}: {
-  onSend: (text: string) => void;
-  onVoicePress: () => void;
-  disabled?: boolean;
-}) {
-  const { colors, typography, radii, spacing } = useTheme();
-  const [text, setText] = useState('');
-  const hasText = text.trim().length > 0;
-
-  const handleSend = useCallback(() => {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-    onSend(trimmed);
-    setText('');
-  }, [text, onSend]);
-
-  return (
-    <View
-      style={[
-        styles.inputBar,
-        {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          opacity: disabled ? 0.5 : 1,
-        },
-      ]}
-    >
-      <RNTextInput
-        style={[
-          styles.textInput,
-          {
-            color: colors.textPrimary,
-            fontFamily: typography.chat.fontFamily,
-            fontSize: typography.chat.fontSize,
-          },
-        ]}
-        placeholder="Type a message..."
-        placeholderTextColor={colors.textTertiary}
-        multiline
-        maxLength={2000}
-        value={text}
-        onChangeText={setText}
-        editable={!disabled}
-      />
-
-      <View style={styles.inputButtons}>
-        {hasText && (
-          <Animated.View entering={FadeIn.duration(150)} exiting={FadeOut.duration(150)}>
-            <PressableScale onPress={handleSend} style={[
-              styles.sendButton,
-              {
-                backgroundColor: colors.accent,
-                borderRadius: radii.full,
-              },
-            ]}>
-              <ThemedText variant="ui" style={{ color: '#FFFFFF', fontSize: 16 }}>
-                ↑
-              </ThemedText>
-            </PressableScale>
-          </Animated.View>
-        )}
-
-        <PressableScale onPress={onVoicePress} style={styles.voiceButton}>
-          <ThemedText
-            variant="ui"
-            style={{ color: colors.textSecondary, fontSize: 20 }}
-          >
-            🎤
-          </ThemedText>
-        </PressableScale>
-      </View>
-    </View>
   );
 }
 
@@ -328,37 +249,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 48,
-  },
-  inputBar: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  textInput: {
-    flex: 1,
-    maxHeight: 100, // ~4 lines
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  inputButtons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingBottom: 4,
-  },
-  sendButton: {
-    width: 32,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  voiceButton: {
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   menu: {
     position: 'absolute',
