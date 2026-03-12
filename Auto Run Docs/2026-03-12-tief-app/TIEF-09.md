@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create chat bubble components at `src/components/conversation/ChatBubble.tsx`.** Two visual styles: user messages and AI messages.
+- [x] **Create chat bubble components at `src/components/conversation/ChatBubble.tsx`.** Two visual styles: user messages and AI messages.
 
 Per spec §2.0.1: "Differentiated by alignment and subtle bg, not color." Same typeface for both.
 
