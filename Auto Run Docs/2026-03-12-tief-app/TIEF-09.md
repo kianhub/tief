@@ -60,7 +60,7 @@ interface ChatBubbleProps {
 - Each new bubble fades in + slides up slightly (opacity 0→1, translateY 8→0, snappy spring)
 - Use `Animated.View` with `entering` prop from reanimated layout animations: `FadeInDown.springify().damping(20).stiffness(300)`
 
-- [ ] **Create the text conversation UI at `src/components/conversation/TextConversationView.tsx`.**
+- [x] **Create the text conversation UI at `src/components/conversation/TextConversationView.tsx`.** ✅ Built with top bar (✕, duration, ⋮ menu with "End Conversation"), FlatList message list with ChatBubble rendering + streaming footer, inline MessageInput with send/voice buttons, KeyboardAvoidingView, and menu overlay. `npx tsc --noEmit` passes.
 
 Per spec §4.4:
 
