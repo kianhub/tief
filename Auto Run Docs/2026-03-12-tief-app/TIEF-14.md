@@ -16,7 +16,8 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create the settings screen at `src/app/(tabs)/settings.tsx`.** Replace the placeholder with the full settings screen per spec §4.8:
+- [x] **Create the settings screen at `src/app/(tabs)/settings.tsx`.** Replace the placeholder with the full settings screen per spec §4.8:
+> Completed: Built full settings screen with 6 sections (Profile, Conversations, Blog Posts, Notifications, Data, About). Created `SettingsRow` component at `src/components/ui/SettingsRow.tsx` and `SelectSheet` modal at `src/components/ui/SelectSheet.tsx`. All preference changes persist to local SQLite and Supabase. Interests and notification times reuse onboarding patterns in page-sheet modals. Data export uses new expo-file-system File/Paths API with expo-sharing. Delete account requires typing "DELETE" to confirm.
 
 **Layout** — `ScrollView` with sections:
 
