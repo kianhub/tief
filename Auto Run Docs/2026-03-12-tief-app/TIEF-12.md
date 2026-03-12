@@ -15,7 +15,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create blog post view screen at `src/app/post/[id].tsx`.** This is the editorial reading experience — the blog post should feel like a beautifully typeset article, per spec §2.0.6:
+- [x] **Create blog post view screen at `src/app/post/[id].tsx`.** ✅ Implemented at `src/app/post/[id]/index.tsx` (directory route). Includes full editorial reading layout, markdown rendering with custom serif typography, generating/error states, transcript modal, and header with back/edit/share actions. This is the editorial reading experience — the blog post should feel like a beautifully typeset article, per spec §2.0.6:
 
 **Layout** — `ScrollView` with centered content column:
 
