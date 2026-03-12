@@ -57,7 +57,7 @@ Use these tools proactively throughout this phase:
 - Each message: role label ("You:" / "tief.:"), content, timestamp
 - Simple list, no bubbles — just clean formatted text
 
-- [ ] **Create the library screen at `src/app/(tabs)/library.tsx`.** Replace the placeholder with the full library per spec §4.7:
+- [x] **Create the library screen at `src/app/(tabs)/library.tsx`.** ✅ Full library implementation with SectionList grouped by time period (This Week/Last Week/This Month/Older), horizontal category filter chips, debounced search mode, BlogCard component at `src/components/blog/BlogCard.tsx`, pull-to-refresh with haptic feedback, empty state with CTA, and navigation to post view. Replace the placeholder with the full library per spec §4.7:
 
 **Layout:**
 
