@@ -105,7 +105,7 @@ export const VOICE_SETTINGS = {
 
 The hook should be typed with a `Theme` interface that includes all sub-objects. Export both the provider and hook.
 
-- [ ] **Create base UI primitives in `src/components/ui/`.** Create the following components, all using the `useTheme` hook for styling. Each component should be its own file. Create an `index.ts` barrel export.
+- [x] **Create base UI primitives in `src/components/ui/`.** Create the following components, all using the `useTheme` hook for styling. Each component should be its own file. Create an `index.ts` barrel export.
 
 **`ThemedText.tsx`** — A Text component that applies theme typography:
 - Props: `variant` (one of the typography scale keys: 'display', 'title', 'titleSmall', 'body', 'bodyLarge', 'ui', 'uiSmall', 'caption', 'chat'), `color` ('primary' | 'secondary' | 'tertiary' | 'accent'), plus all standard `TextProps`
