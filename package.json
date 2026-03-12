@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "dependencies": {
     "@elevenlabs/react-native": "^0.5.11",
@@ -45,8 +47,10 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@oxlint/binding-darwin-arm64": "^1.55.0",
     "@types/react": "~19.2.2",
     "@types/uuid": "^11.0.0",
+    "oxlint": "^1.55.0",
     "typescript": "~5.9.2"
   },
   "private": true

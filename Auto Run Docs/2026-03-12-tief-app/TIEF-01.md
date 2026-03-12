@@ -45,7 +45,7 @@ npm install uuid && npm install -D @types/uuid
 
 After installing, verify with `npx expo doctor` (fix any version mismatches). The project should compile without errors.
 
-- [ ] **Replace ESLint with oxlint.** The `create-expo-app` template may include ESLint by default. Remove it and set up oxlint instead:
+- [x] **Replace ESLint with oxlint.** The `create-expo-app` template may include ESLint by default. Remove it and set up oxlint instead:
 
 1. Remove ESLint and related packages:
 ```bash
