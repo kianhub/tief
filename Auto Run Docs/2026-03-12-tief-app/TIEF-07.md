@@ -54,7 +54,7 @@ Returns config object with `Config.ELEVENLABS_AGENT_ID`, the built system prompt
 
 Export all functions. Add JSDoc comments explaining the ElevenLabs integration pattern.
 
-- [ ] **Create Claude API proxy helper module at `src/lib/claude.ts`.** This module handles text conversation with Claude via the Supabase proxy edge function:
+- [x] **Create Claude API proxy helper module at `src/lib/claude.ts`.** This module handles text conversation with Claude via the Supabase proxy edge function:
 
 ```typescript
 import { supabase } from './supabase';
