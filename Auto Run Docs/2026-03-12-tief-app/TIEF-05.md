@@ -15,7 +15,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create tab layout with custom tab bar at `src/app/(tabs)/_layout.tsx`.** Implement a warm, minimal tab bar:
+- [x] **Create tab layout with custom tab bar at `src/app/(tabs)/_layout.tsx`.** Implement a warm, minimal tab bar:
 
 The tab bar should use the `Tabs` component from `expo-router`:
 ```typescript
