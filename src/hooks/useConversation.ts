@@ -6,6 +6,7 @@ import { useDatabase } from '@/lib/db-context';
 import {
   insertConversation,
   updateConversation,
+  getConversation as getConversationRecord,
   insertMessage,
   getMessagesByConversation,
   getRecentConversations,
@@ -67,6 +68,7 @@ export interface UseConversationReturn {
 
   // Actions
   startConversation: (params: StartParams) => Promise<void>;
+  resumeConversation: (convId: string) => void;
   sendTextMessage: (text: string) => Promise<void>;
   switchMode: (newMode: ConversationMode) => Promise<void>;
   endConversation: () => Promise<void>;
@@ -305,6 +307,25 @@ export function useConversation(): UseConversationReturn {
     }
   }, [phase, db, profile]);
 
+  const resumeConversation = useCallback((convId: string) => {
+    if (phase !== 'idle') return;
+
+    const conv = getConversationRecord(db, convId);
+    if (!conv || conv.status !== 'active') return;
+
+    setConversationId(conv.id);
+    conversationIdRef.current = conv.id;
+    setMode(conv.mode);
+    setTopicPrompt(conv.topic_prompt);
+    setTopicCategory(conv.topic_category);
+
+    const msgs = getMessagesByConversation(db, convId);
+    setMessages(msgs);
+    messagesRef.current = msgs;
+
+    setPhase('active');
+  }, [phase, db]);
+
   const sendTextMessage = useCallback(async (text: string) => {
     if (phase !== 'active' || mode !== 'text' || !conversationIdRef.current) return;
 
@@ -479,6 +500,7 @@ export function useConversation(): UseConversationReturn {
 
     // Actions
     startConversation,
+    resumeConversation,
     sendTextMessage,
     switchMode,
     endConversation,

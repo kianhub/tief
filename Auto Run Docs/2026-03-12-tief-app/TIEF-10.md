@@ -16,7 +16,9 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create the conversation route at `src/app/conversation/[id].tsx`.** This is the unified conversation screen that renders either voice or text mode:
+- [x] **Create the conversation route at `src/app/conversation/[id].tsx`.** This is the unified conversation screen that renders either voice or text mode:
+
+> Completed: Route parses params, initializes new/existing conversations, renders voice/text with cross-fade mode switching (200ms), back navigation guard (beforeRemove + BackHandler), ElevenLabs adapter wired via ref, StatusBar switches light/auto per mode, haptic on start. Added `resumeConversation` to useConversation hook. Added ElevenLabsProvider to root layout. Inline EndConfirmationOverlay serves as placeholder until task 2.
 
 ```typescript
 // Route params: conversation/[id]
