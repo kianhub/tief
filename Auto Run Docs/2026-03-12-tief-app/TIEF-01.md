@@ -254,7 +254,7 @@ module.exports = config;
 
 Verify the project compiles with `npx expo export --platform ios --dump-sourcemap false` or just `npx tsc --noEmit`.
 
-- [ ] **Create environment configuration with placeholder values.** Create `src/constants/config.ts`:
+- [x] **Create environment configuration with placeholder values.** Create `src/constants/config.ts`:
 
 ```typescript
 // Environment configuration
