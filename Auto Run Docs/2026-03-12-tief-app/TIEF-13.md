@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create push notification module at `src/lib/notifications.ts`.** This handles the complete notification lifecycle:
+- [x] **Create push notification module at `src/lib/notifications.ts`.** This handles the complete notification lifecycle:
 
 **Registration:**
 ```typescript
