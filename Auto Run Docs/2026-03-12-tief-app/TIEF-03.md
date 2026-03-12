@@ -113,7 +113,7 @@ export interface PromptBankItem {
 
 Also export helper types: `ConversationWithBlogPost` (Conversation & { blog_post?: BlogPost }), `MessageWithConversation`, etc. Export a `parseTags` helper function that converts a JSON string to `string[]` and a `stringifyTags` helper that does the reverse.
 
-- [ ] **Create expo-sqlite database initialization and migration runner in `src/lib/db.ts`.** Use the `expo-sqlite` synchronous API (SDK 55 uses the new API):
+- [x] **Create expo-sqlite database initialization and migration runner in `src/lib/db.ts`.** *(Completed: `getDatabase()`, `runMigrations()`, and `initDatabase()` implemented using sync API. Migration v1 creates all 5 tables with foreign keys, indexes, WAL mode, and foreign key enforcement. No TS errors.)* Use the `expo-sqlite` synchronous API (SDK 55 uses the new API):
 
 ```typescript
 import * as SQLite from 'expo-sqlite';
@@ -138,7 +138,7 @@ Create an `initDatabase()` function that calls `getDatabase()` then `runMigratio
 
 Export the db instance and init function. Use `execSync` for DDL statements and `runSync`/`getFirstSync`/`getAllSync` for DML.
 
-- [ ] **Create database CRUD helpers in `src/lib/db-helpers.ts`.** These are pure functions that take a database instance and perform operations. Group by entity:
+- [x] **Create database CRUD helpers in `src/lib/db-helpers.ts`.** *(Completed: all CRUD helpers for conversations, messages, blog posts, and preferences implemented with parameterized queries, try/catch error handling, and correct type signatures. No TS errors.)* These are pure functions that take a database instance and perform operations. Group by entity:
 
 **Conversations:**
 - `insertConversation(db, conversation: Omit<Conversation, 'created_at'>): void`
@@ -167,7 +167,7 @@ Export the db instance and init function. Use `execSync` for DDL statements and 
 
 All functions should use parameterized queries to prevent SQL injection. Use `try/catch` and log errors with `console.error`. Verify no TypeScript errors.
 
-- [ ] **Create Supabase client initialization in `src/lib/supabase.ts`.** Initialize the Supabase client with auth persistence via `expo-secure-store`:
+- [x] **Create Supabase client initialization in `src/lib/supabase.ts`.** *(Completed: Supabase client with SecureStore auth adapter, `getCurrentUser()`, `getProfile()`, and `updateProfile()` helpers. No TS errors.)* Initialize the Supabase client with auth persistence via `expo-secure-store`:
 
 ```typescript
 import { createClient } from '@supabase/supabase-js';
