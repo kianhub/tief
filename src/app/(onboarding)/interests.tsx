@@ -1,0 +1,108 @@
+import { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
+
+import { useTheme } from '@/hooks/useTheme';
+import { ThemedView, ThemedText, Button, Chip } from '@/components/ui';
+import { CATEGORIES, type TopicCategory } from '@/constants/categories';
+
+export default function InterestsScreen() {
+  const router = useRouter();
+  const { spacing } = useTheme();
+  const [selected, setSelected] = useState<Set<TopicCategory>>(new Set());
+
+  const toggleCategory = (id: TopicCategory) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  return (
+    <ThemedView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollContent,
+          { padding: spacing.contentPadding },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <ThemedText variant="title" style={styles.title}>
+          What do you like talking about?
+        </ThemedText>
+
+        <ThemedText variant="body" color="secondary" style={styles.subtitle}>
+          Tap all that interest you:
+        </ThemedText>
+
+        <View style={styles.chipGrid}>
+          {CATEGORIES.map((cat) => (
+            <Chip
+              key={cat.id}
+              label={cat.id === 'random' ? 'Random — surprise me' : cat.label}
+              selected={selected.has(cat.id)}
+              onPress={() => toggleCategory(cat.id)}
+              color={cat.color}
+              style={styles.chip}
+            />
+          ))}
+        </View>
+
+        <ThemedText variant="caption" color="tertiary" style={styles.hint}>
+          You can change these anytime
+        </ThemedText>
+      </ScrollView>
+
+      <View style={[styles.footer, { paddingHorizontal: spacing.contentPadding }]}>
+        <Button
+          variant="primary"
+          size="lg"
+          label="Continue →"
+          disabled={selected.size === 0}
+          onPress={() => router.push('/(onboarding)/notifications')}
+        />
+      </View>
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingTop: 80,
+    paddingBottom: 120,
+  },
+  title: {
+    marginBottom: 8,
+  },
+  subtitle: {
+    marginBottom: 24,
+  },
+  chipGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 24,
+  },
+  chip: {
+    marginBottom: 2,
+  },
+  hint: {
+    textAlign: 'center',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingBottom: 60,
+    paddingTop: 16,
+  },
+});
