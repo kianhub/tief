@@ -277,7 +277,7 @@ EXPO_PUBLIC_ELEVENLABS_AGENT_ID=your-agent-id
 
 Add `.env` and `.env.local` to `.gitignore` (keep `.env.example` tracked).
 
-- [ ] **Create user action documents in `/useractions/` detailing all manual setup steps.** Create the following markdown files:
+- [x] **Create user action documents in `/useractions/` detailing all manual setup steps.** Create the following markdown files:
 
 **`/useractions/01-supabase-setup.md`** — Document these steps:
 1. Create a Supabase project at https://supabase.com/dashboard
