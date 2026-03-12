@@ -12,10 +12,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
-
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from '@/components/ui';
+import { haptics } from '@/lib/haptics';
 
 export interface MessageInputProps {
   onSend: (text: string) => void;
@@ -73,7 +72,7 @@ export function MessageInput({
     if (!trimmed) return;
     onSend(trimmed);
     setText('');
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    haptics.light();
   }, [text, onSend]);
 
   return (

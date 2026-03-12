@@ -3,6 +3,7 @@ import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-nati
 
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from './ThemedText';
+import { haptics } from '@/lib/haptics';
 
 export interface SelectOption<T> {
   label: string;
@@ -69,6 +70,7 @@ export function SelectSheet<T>({
                 <Pressable
                   key={String(option.value)}
                   onPress={() => {
+                    haptics.selection();
                     onSelect(option.value);
                     onClose();
                   }}

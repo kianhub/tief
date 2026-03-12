@@ -12,10 +12,9 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
-
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from '@/components/ui';
+import { haptics } from '@/lib/haptics';
 import { VoiceOrb, type OrbState } from './VoiceOrb';
 import type { Message } from '@/types';
 
@@ -102,7 +101,7 @@ export function VoiceConversationView({
   }, [messages.length]);
 
   const handleToggleMute = useCallback(() => {
-    Haptics.selectionAsync();
+    haptics.selection();
     onToggleMute();
   }, [onToggleMute]);
 

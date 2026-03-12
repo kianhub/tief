@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, type StyleProp, type ViewStyle } from 'react-nat
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
+import { haptics } from '@/lib/haptics';
 
 export interface ChipProps {
   label: string;
@@ -31,9 +32,14 @@ export function Chip({ label, selected, onPress, color, style }: ChipProps) {
     scale.value = withSpring(1, springs.snappy);
   };
 
+  const handlePress = () => {
+    haptics.selection();
+    onPress();
+  };
+
   return (
     <AnimatedPressable
-      onPress={onPress}
+      onPress={handlePress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       style={[

@@ -17,7 +17,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Markdown from 'react-native-markdown-display';
-import * as Haptics from 'expo-haptics';
 import { File, Paths } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
@@ -31,6 +30,7 @@ import {
 } from '@/lib/db-helpers';
 import { SERIF_FONT, SANS_FONT } from '@/constants/theme';
 import { parseTags } from '@/types';
+import { haptics } from '@/lib/haptics';
 import { slugify } from '@/lib/text-utils';
 import type { BlogPost, Conversation, Message } from '@/types';
 
@@ -129,7 +129,7 @@ export default function PostViewScreen() {
 
     const file = new File(Paths.cache, `${slugify(post.title)}.md`);
     file.write(markdownContent);
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await haptics.light();
     await Sharing.shareAsync(file.uri, {
       mimeType: 'text/markdown',
       dialogTitle: 'Share your post',

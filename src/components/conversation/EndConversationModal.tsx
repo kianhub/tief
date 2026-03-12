@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
+import { haptics } from '@/lib/haptics';
 
 export interface EndConversationModalProps {
   visible: boolean;
@@ -93,7 +94,10 @@ export function EndConversationModal({
         </Animated.Text>
 
         <AnimatedPressable
-          onPress={onConfirm}
+          onPress={() => {
+            haptics.success();
+            onConfirm();
+          }}
           style={[
             styles.primaryButton,
             {

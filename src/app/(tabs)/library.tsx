@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
 import Animated, {
   FadeIn,
   FadeOut,
@@ -27,6 +26,7 @@ import { useDatabase } from '@/lib/db-context';
 import { getAllBlogPosts, searchBlogPosts } from '@/lib/db-helpers';
 import { CATEGORIES } from '@/constants/categories';
 import { spacing } from '@/constants/theme';
+import { haptics } from '@/lib/haptics';
 import type { BlogPost, TopicCategory } from '@/types';
 
 type SectionData = {
@@ -136,7 +136,7 @@ export default function LibraryScreen() {
   }, [loadPosts]);
 
   const handleRefresh = useCallback(async () => {
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await haptics.light();
     await syncNow();
     loadPosts();
   }, [syncNow, loadPosts]);

@@ -7,11 +7,10 @@ import {
 } from 'react-native';
 import { Tabs, Redirect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
-
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/hooks/useTheme';
 import { ThemedText } from '@/components/ui';
+import { haptics } from '@/lib/haptics';
 
 const TAB_BAR_HEIGHT = 54;
 
@@ -31,7 +30,7 @@ function HapticTab(props: PressableProps) {
   const { onPress, ...rest } = props;
 
   const handlePress = (e: GestureResponderEvent) => {
-    Haptics.selectionAsync();
+    haptics.selection();
     (onPress as ((e: GestureResponderEvent) => void) | undefined)?.(e);
   };
 

@@ -2,6 +2,7 @@ import { ActivityIndicator, Pressable, StyleSheet, type StyleProp, type ViewStyl
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
+import { haptics } from '@/lib/haptics';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -13,6 +14,7 @@ export interface ButtonProps {
   onPress?: () => void;
   disabled?: boolean;
   loading?: boolean;
+  hapticDisabled?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -31,6 +33,7 @@ export function Button({
   onPress,
   disabled = false,
   loading = false,
+  hapticDisabled = false,
   style,
 }: ButtonProps) {
   const { colors, typography, radii, springs } = useTheme();
@@ -46,6 +49,11 @@ export function Button({
 
   const handlePressOut = () => {
     scale.value = withSpring(1, springs.snappy);
+  };
+
+  const handlePress = () => {
+    if (!hapticDisabled) haptics.light();
+    onPress?.();
   };
 
   const height = sizeHeights[size];
@@ -67,7 +75,7 @@ export function Button({
 
   return (
     <AnimatedPressable
-      onPress={onPress}
+      onPress={handlePress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       disabled={disabled || loading}

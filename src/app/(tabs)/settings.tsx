@@ -13,8 +13,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Sharing from 'expo-sharing';
 import { File, Paths } from 'expo-file-system';
-import * as Haptics from 'expo-haptics';
-
 import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/lib/auth-context';
 import { useDatabase } from '@/lib/db-context';
@@ -24,6 +22,7 @@ import { ThemedView, ThemedText, SettingsRow, SelectSheet, Chip } from '@/compon
 import { CATEGORIES } from '@/constants/categories';
 import { VOICES } from '@/constants/voices';
 import { spacing } from '@/constants/theme';
+import { haptics } from '@/lib/haptics';
 import type { BlogTone, NotificationFrequency, TopicCategory } from '@/types';
 
 // --- Constants ---
@@ -264,7 +263,7 @@ export default function SettingsScreen() {
               value={conversationPrompts}
               onValueChange={(val) => {
                 setConversationPrompts(val);
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                haptics.selection();
               }}
               trackColor={{ false: colors.border, true: colors.accent }}
               thumbColor="#FFFFFF"
@@ -546,6 +545,7 @@ function NotificationTimesEditor({
   const handleToggle = useCallback(
     async (hour: number, minute: number) => {
       if (!userId) return;
+      haptics.selection();
       const key = `${hour}:${minute}`;
       const newSet = new Set(enabledSet);
       if (newSet.has(key)) {

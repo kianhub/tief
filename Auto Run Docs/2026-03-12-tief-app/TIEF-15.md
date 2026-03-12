@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Add haptic feedback to all key interactions throughout the app.** Per spec §2.0.4, add haptics using `expo-haptics`:
+- [x] **Add haptic feedback to all key interactions throughout the app.** Per spec §2.0.4, add haptics using `expo-haptics`:
 
 Go through every interactive element and add the appropriate haptic:
 

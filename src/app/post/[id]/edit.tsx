@@ -11,14 +11,13 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
-
 import { ThemedText, ThemedView, Button } from '@/components/ui';
 import { useTheme } from '@/hooks/useTheme';
 import { useDatabase } from '@/lib/db-context';
 import { getBlogPost, updateBlogPost } from '@/lib/db-helpers';
 import { SERIF_FONT } from '@/constants/theme';
 import { parseTags, stringifyTags } from '@/types';
+import { haptics } from '@/lib/haptics';
 import type { BlogPost } from '@/types';
 
 export default function PostEditScreen() {
@@ -74,7 +73,7 @@ export default function PostEditScreen() {
       synced_at: null,
     });
 
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await haptics.light();
     router.back();
   };
 

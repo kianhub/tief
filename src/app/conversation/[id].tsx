@@ -12,8 +12,6 @@ import {
   useConversation as useElevenLabs,
   type Conversation as ELConversation,
 } from '@elevenlabs/react-native';
-import * as Haptics from 'expo-haptics';
-
 import { useConversation } from '@/hooks/useConversation';
 import { useAudioAmplitude } from '@/hooks/useAudioAmplitude';
 import { useTheme } from '@/hooks/useTheme';
@@ -22,6 +20,7 @@ import { getConversation as getConversationRecord } from '@/lib/db-helpers';
 import { VoiceConversationView } from '@/components/conversation/VoiceConversationView';
 import { TextConversationView } from '@/components/conversation/TextConversationView';
 import { EndConversationModal } from '@/components/conversation/EndConversationModal';
+import { haptics } from '@/lib/haptics';
 import type { ConversationMode, TopicCategory } from '@/types';
 
 export default function ConversationScreen() {
@@ -103,14 +102,14 @@ export default function ConversationScreen() {
           topicCategory: category as TopicCategory | undefined,
         })
         .then(() => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          haptics.medium();
         });
     } else if (id && id !== 'new') {
       // Resume existing conversation from DB
       const existing = getConversationRecord(db, id);
       if (existing && existing.status === 'active') {
         conversation.resumeConversation(id);
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        haptics.medium();
       } else {
         // Conversation doesn't exist or is not active — go back
         router.back();
@@ -175,7 +174,7 @@ export default function ConversationScreen() {
   const handleConfirmEnd = useCallback(async () => {
     setShowEndModal(false);
     await conversation.endConversation();
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    haptics.success();
     router.replace('/(tabs)');
   }, [conversation.endConversation, router]);
 
