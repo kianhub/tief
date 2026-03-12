@@ -91,7 +91,7 @@ export async function setupNotificationCategories() {
 
 Export all functions.
 
-- [ ] **Create notification response handler with deep linking at `src/lib/notification-handler.ts` and integrate into root layout.**
+- [x] **Create notification response handler with deep linking at `src/lib/notification-handler.ts` and integrate into root layout.**
 
 **Response handler:**
 ```typescript
