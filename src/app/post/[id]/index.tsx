@@ -18,6 +18,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import Markdown from 'react-native-markdown-display';
 import * as Haptics from 'expo-haptics';
+import { File, Paths } from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 
 import { ThemedText, ThemedView, Button, Card } from '@/components/ui';
 import { useTheme } from '@/hooks/useTheme';
@@ -29,6 +31,7 @@ import {
 } from '@/lib/db-helpers';
 import { SERIF_FONT, SANS_FONT } from '@/constants/theme';
 import { parseTags } from '@/types';
+import { slugify } from '@/lib/text-utils';
 import type { BlogPost, Conversation, Message } from '@/types';
 
 export default function PostViewScreen() {
@@ -100,8 +103,37 @@ export default function PostViewScreen() {
   };
 
   const handleShare = async () => {
-    // Share logic will be wired up in TIEF-12 task 3
+    if (!post) return;
+
+    const postTags = parseTags(post.tags);
+    const date = post.generated_at
+      ? new Date(post.generated_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : '';
+
+    const markdownContent = [
+      `# ${post.title}`,
+      '',
+      `*${date} · tief.*`,
+      postTags.length > 0 ? `*Tags: ${postTags.join(', ')}*` : '',
+      '',
+      '---',
+      '',
+      post.content,
+    ]
+      .filter((line) => line !== undefined)
+      .join('\n');
+
+    const file = new File(Paths.cache, `${slugify(post.title)}.md`);
+    file.write(markdownContent);
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await Sharing.shareAsync(file.uri, {
+      mimeType: 'text/markdown',
+      dialogTitle: 'Share your post',
+    });
   };
 
   const handleViewTranscript = () => {

@@ -110,7 +110,7 @@ Use these tools proactively throughout this phase:
 
 Tap on card navigates to `post/[id]`.
 
-- [ ] **Create blog post editor at `src/app/post/[id]/edit.tsx` and markdown export/sharing.**
+- [x] **Create blog post editor at `src/app/post/[id]/edit.tsx` and markdown export/sharing.** ✅ Implemented editor with title/content/tags editing, save with haptic feedback, cancel navigation. Markdown export uses new expo-file-system `File`/`Paths` API to write temp `.md` file and `expo-sharing` to open share sheet. Created `slugify` utility in `src/lib/text-utils.ts`. TypeScript compiles clean.
 
 **Editor (`post/[id]/edit.tsx`):**
 - Simple markdown editor — NOT a WYSIWYG rich text editor. Just a large TextInput with markdown syntax.
