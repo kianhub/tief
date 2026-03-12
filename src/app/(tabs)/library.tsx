@@ -18,7 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { isThisWeek, isThisMonth, subWeeks, isWithinInterval, startOfWeek, endOfWeek } from 'date-fns';
 
-import { ThemedText, ThemedView, Button, Chip } from '@/components/ui';
+import { ThemedText, ThemedView, Chip, EmptyState, SyncBanner } from '@/components/ui';
 import { BlogCard } from '@/components/blog/BlogCard';
 import { useTheme } from '@/hooks/useTheme';
 import { useSync } from '@/hooks/useSync';
@@ -72,7 +72,7 @@ export default function LibraryScreen() {
   const router = useRouter();
   const db = useDatabase();
   const { colors, typography, radii } = useTheme();
-  const { isSyncing, syncNow } = useSync();
+  const { isSyncing, syncNow, error: syncError } = useSync();
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null);
@@ -159,19 +159,11 @@ export default function LibraryScreen() {
           <ThemedText variant="title">Your Library</ThemedText>
         </View>
 
-        <View style={styles.emptyContainer}>
-          <ThemedText variant="title" style={styles.emptyTitle}>
-            No posts yet
-          </ThemedText>
-          <ThemedText variant="body" color="secondary" style={styles.emptySubtitle}>
-            Start a conversation and your thoughts will appear here.
-          </ThemedText>
-          <Button
-            label="Start a Conversation →"
-            onPress={() => router.push('/(tabs)/')}
-            style={styles.emptyButton}
-          />
-        </View>
+        <EmptyState
+          title="No posts yet"
+          message="Start a conversation and your thoughts will appear here."
+          action={{ label: 'Start a Conversation →', onPress: () => router.push('/(tabs)/') }}
+        />
       </ThemedView>
     );
   }
@@ -242,6 +234,9 @@ export default function LibraryScreen() {
         </Animated.ScrollView>
       )}
 
+      {/* Sync Error Banner */}
+      <SyncBanner visible={!!syncError} onRetry={syncNow} />
+
       {/* Blog Post List */}
       <SectionList
         sections={sections}
@@ -271,11 +266,10 @@ export default function LibraryScreen() {
         }
         ListEmptyComponent={
           searchMode ? (
-            <View style={styles.emptySearchContainer}>
-              <ThemedText variant="body" color="secondary">
-                No results for "{searchQuery}"
-              </ThemedText>
-            </View>
+            <EmptyState
+              title="Nothing found"
+              message="Try a different search term"
+            />
           ) : null
         }
       />
@@ -325,25 +319,5 @@ const styles = StyleSheet.create({
   },
   listContent: {
     flexGrow: 1,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: spacing.xl,
-  },
-  emptyTitle: {
-    textAlign: 'center',
-  },
-  emptySubtitle: {
-    textAlign: 'center',
-    marginTop: spacing.sm,
-  },
-  emptyButton: {
-    marginTop: spacing.lg,
-  },
-  emptySearchContainer: {
-    paddingVertical: spacing.xxl,
-    alignItems: 'center',
   },
 });

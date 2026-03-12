@@ -49,7 +49,8 @@ export const haptics = {
 
 Update the `Button` component to call `haptics.light()` on press by default (can be disabled with a `hapticDisabled` prop).
 
-- [ ] **Create designed empty states, error states, and loading states.** These should feel warm and intentional, NOT generic spinners and "Something went wrong" messages.
+- [x] **Create designed empty states, error states, and loading states.** These should feel warm and intentional, NOT generic spinners and "Something went wrong" messages.
+> Completed: Created `EmptyState`, `ErrorState`, `LoadingState`, and `SyncBanner` components in `src/components/ui/`. Integrated EmptyState into library (no posts + no search results), ErrorState into blog post (not found) and conversation (failed start), LoadingState into blog post (loading + generating), and SyncBanner into library for sync failures. All use spring/fade animations consistent with the design system.
 
 **Create `src/components/ui/EmptyState.tsx`:**
 ```typescript

@@ -20,6 +20,7 @@ import { getConversation as getConversationRecord } from '@/lib/db-helpers';
 import { VoiceConversationView } from '@/components/conversation/VoiceConversationView';
 import { TextConversationView } from '@/components/conversation/TextConversationView';
 import { EndConversationModal } from '@/components/conversation/EndConversationModal';
+import { ErrorState } from '@/components/ui';
 import { haptics } from '@/lib/haptics';
 import type { ConversationMode, TopicCategory } from '@/types';
 
@@ -182,7 +183,20 @@ export default function ConversationScreen() {
     setShowEndModal(false);
   }, []);
 
-  // --- Loading / error states ---
+  // --- Error state (conversation failed to start) ---
+  if (conversation.phase === 'idle' && conversation.error) {
+    return (
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <StatusBar style="auto" />
+        <ErrorState
+          message={conversation.error}
+          onRetry={() => router.back()}
+        />
+      </View>
+    );
+  }
+
+  // --- Loading state ---
   if (conversation.phase === 'idle' || conversation.phase === 'starting') {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>

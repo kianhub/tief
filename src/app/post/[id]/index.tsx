@@ -9,18 +9,12 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, {
-  FadeIn,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import Markdown from 'react-native-markdown-display';
 import { File, Paths } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
-import { ThemedText, ThemedView, Button, Card } from '@/components/ui';
+import { ThemedText, ThemedView, Card, ErrorState, LoadingState } from '@/components/ui';
 import { useTheme } from '@/hooks/useTheme';
 import { useDatabase } from '@/lib/db-context';
 import {
@@ -47,12 +41,6 @@ export default function PostViewScreen() {
   const [notFound, setNotFound] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
 
-  // Generating animation
-  const pulseOpacity = useSharedValue(1);
-  const pulseStyle = useAnimatedStyle(() => ({
-    opacity: pulseOpacity.value,
-  }));
-
   useFocusEffect(
     useCallback(() => {
       if (!id) {
@@ -71,14 +59,6 @@ export default function PostViewScreen() {
 
       const convo = getConversation(db, blogPost.conversation_id);
       setConversation(convo);
-
-      if (blogPost.status === 'generating') {
-        pulseOpacity.value = withRepeat(
-          withTiming(0.4, { duration: 1200 }),
-          -1,
-          true
-        );
-      }
     }, [id, db])
   );
 
@@ -234,27 +214,17 @@ export default function PostViewScreen() {
   if (notFound) {
     return (
       <ThemedView style={styles.container}>
-        <View
-          style={[
-            styles.centered,
-            { paddingTop: insets.top + spacing.xxl },
-          ]}
-        >
-          <ThemedText variant="title">Post not found</ThemedText>
-          <ThemedText
-            variant="body"
-            color="secondary"
-            style={{ marginTop: spacing.sm }}
-          >
-            This post may have been removed or hasn't been created yet.
-          </ThemedText>
-          <Button
-            label="← Go Back"
-            variant="secondary"
-            onPress={handleBack}
-            style={{ marginTop: spacing.lg }}
-          />
+        <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
+          <Pressable onPress={handleBack} hitSlop={12}>
+            <ThemedText variant="uiSmall" color="secondary">
+              ← Back
+            </ThemedText>
+          </Pressable>
         </View>
+        <ErrorState
+          message="This post may have been removed or hasn't been created yet."
+          onRetry={handleBack}
+        />
       </ThemedView>
     );
   }
@@ -270,28 +240,7 @@ export default function PostViewScreen() {
             </ThemedText>
           </Pressable>
         </View>
-        <View style={styles.centered}>
-          <Animated.View style={pulseStyle}>
-            <ThemedText
-              variant="title"
-              style={{ textAlign: 'center' }}
-            >
-              Your post is still being written...
-            </ThemedText>
-            <ThemedText
-              variant="body"
-              color="secondary"
-              style={{
-                textAlign: 'center',
-                marginTop: spacing.md,
-                paddingHorizontal: spacing.xl,
-              }}
-            >
-              We're turning your conversation into something beautiful.
-              Check back in a moment.
-            </ThemedText>
-          </Animated.View>
-        </View>
+        <LoadingState message="Your post is being written..." />
       </ThemedView>
     );
   }
@@ -300,7 +249,7 @@ export default function PostViewScreen() {
   if (!post) {
     return (
       <ThemedView style={styles.container}>
-        <View style={{ flex: 1 }} />
+        <LoadingState />
       </ThemedView>
     );
   }
