@@ -1,6 +1,7 @@
 import { Redirect, Stack } from 'expo-router';
 
 import { useAuth } from '@/lib/auth-context';
+import { OnboardingProvider } from '@/lib/onboarding-context';
 import { ThemedView } from '@/components/ui';
 
 export default function OnboardingLayout() {
@@ -15,8 +16,10 @@ export default function OnboardingLayout() {
   }
 
   return (
-    <ThemedView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </ThemedView>
+    <OnboardingProvider>
+      <ThemedView style={{ flex: 1 }}>
+        <Stack screenOptions={{ headerShown: false }} />
+      </ThemedView>
+    </OnboardingProvider>
   );
 }

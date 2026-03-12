@@ -15,7 +15,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create the home screen at `src/app/(tabs)/index.tsx`.** Replace the placeholder with the full home screen per spec §4.2:
+- [x] **Create the home screen at `src/app/(tabs)/index.tsx`.** Replace the placeholder with the full home screen per spec §4.2:
 
 **Layout (ScrollView):**
 1. **Greeting** — Top section with generous top padding (64px + safe area)
@@ -42,7 +42,7 @@ Use these tools proactively throughout this phase:
 - Call `getPreference(db, 'featured_prompt')` or generate a default prompt
 - Use `useFocusEffect` from expo-router to refresh data when screen comes into focus
 
-- [ ] **Create `PromptCard` component at `src/components/conversation/PromptCard.tsx` and `RecentConversations` component at `src/components/conversation/RecentConversations.tsx`.**
+- [x] **Create `PromptCard` component at `src/components/conversation/PromptCard.tsx` and `RecentConversations` component at `src/components/conversation/RecentConversations.tsx`.**
 
 **`PromptCard.tsx`:**
 - Props: `prompt: string`, `category?: TopicCategory`, `onVoice: () => void`, `onText: () => void`

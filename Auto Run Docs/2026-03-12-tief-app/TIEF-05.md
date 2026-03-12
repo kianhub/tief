@@ -47,7 +47,7 @@ The `(tabs)/_layout.tsx` should check `useAuth().isOnboarded` — if not onboard
 
 Verify tabs render and switching works. `npx tsc --noEmit` should pass.
 
-- [ ] **Create onboarding layout and first two screens.**
+- [x] **Create onboarding layout and first two screens.** *(Layout already existed from prior task. Created welcome.tsx with reanimated fade-in animation, and interests.tsx with Chip grid for all 11 categories. tsc --noEmit passes.)*
 
 **`src/app/(onboarding)/_layout.tsx`:**
 - Stack navigator with `headerShown: false`
@@ -74,7 +74,7 @@ Verify tabs render and switching works. `npx tsc --noEmit` should pass.
 - Primary Button: "Continue →" → navigates to `notifications`
 - Store selected interests in component state (persisted in next phase)
 
-- [ ] **Create remaining onboarding screens and persist onboarding data.**
+- [x] **Create remaining onboarding screens and persist onboarding data.** *(Created OnboardingContext to share state across screens. Built notifications.tsx with time slot toggles + frequency radio buttons. Built voice-setup.tsx with voice card grid, mic permission via expo-audio, and final submit that persists to SQLite + Supabase. Updated interests.tsx to use context. tsc --noEmit passes.)*
 
 **`src/app/(onboarding)/notifications.tsx`** per spec §4.1 Screen 3:
 - Title in serif: "When should we start a conversation?"

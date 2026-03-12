@@ -16,7 +16,7 @@ Use these tools proactively throughout this phase:
 
 ---
 
-- [ ] **Create ElevenLabs helper module at `src/lib/elevenlabs.ts`.** This module wraps the ElevenLabs SDK for voice conversation management:
+- [x] **Create ElevenLabs helper module at `src/lib/elevenlabs.ts`.** This module wraps the ElevenLabs SDK for voice conversation management:
 
 ```typescript
 import { Config } from '@/constants/config';

@@ -1,26 +1,24 @@
-import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { useTheme } from '@/hooks/useTheme';
+import { useOnboarding } from '@/lib/onboarding-context';
 import { ThemedView, ThemedText, Button, Chip } from '@/components/ui';
 import { CATEGORIES, type TopicCategory } from '@/constants/categories';
 
 export default function InterestsScreen() {
   const router = useRouter();
   const { spacing } = useTheme();
-  const [selected, setSelected] = useState<Set<TopicCategory>>(new Set());
+  const { interests, setInterests } = useOnboarding();
 
   const toggleCategory = (id: TopicCategory) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+    const next = new Set(interests);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
+    setInterests(next);
   };
 
   return (
@@ -45,7 +43,7 @@ export default function InterestsScreen() {
             <Chip
               key={cat.id}
               label={cat.id === 'random' ? 'Random — surprise me' : cat.label}
-              selected={selected.has(cat.id)}
+              selected={interests.has(cat.id)}
               onPress={() => toggleCategory(cat.id)}
               color={cat.color}
               style={styles.chip}
@@ -63,7 +61,7 @@ export default function InterestsScreen() {
           variant="primary"
           size="lg"
           label="Continue →"
-          disabled={selected.size === 0}
+          disabled={interests.size === 0}
           onPress={() => router.push('/(onboarding)/notifications')}
         />
       </View>

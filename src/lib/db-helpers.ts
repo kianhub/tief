@@ -91,10 +91,10 @@ export function getRecentConversations(
 export function getConversationsWithBlogStatus(
   db: SQLiteDatabase,
   limit: number = 20
-): Array<Conversation & { blog_status: BlogPostStatus | null }> {
+): Array<Conversation & { blog_status: BlogPostStatus | null; blog_title: string | null }> {
   try {
-    return db.getAllSync<Conversation & { blog_status: BlogPostStatus | null }>(
-      `SELECT c.*, bp.status AS blog_status
+    return db.getAllSync<Conversation & { blog_status: BlogPostStatus | null; blog_title: string | null }>(
+      `SELECT c.*, bp.status AS blog_status, bp.title AS blog_title
        FROM conversations c
        LEFT JOIN blog_posts bp ON bp.conversation_id = c.id
        ORDER BY c.started_at DESC
