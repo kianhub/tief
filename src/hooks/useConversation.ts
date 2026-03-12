@@ -8,6 +8,7 @@ import {
   updateConversation,
   getConversation as getConversationRecord,
   insertMessage,
+  insertBlogPost,
   getMessagesByConversation,
   getRecentConversations,
 } from '@/lib/db-helpers';
@@ -436,8 +437,10 @@ export function useConversation(): UseConversationReturn {
         ? Math.floor((Date.now() - startedAtRef.current) / 1000)
         : duration;
 
+      const convId = conversationIdRef.current;
+
       // Update conversation record
-      updateConversation(db, conversationIdRef.current, {
+      updateConversation(db, convId, {
         status: 'ended',
         ended_at: now,
         duration_seconds: durationSeconds,
@@ -445,7 +448,7 @@ export function useConversation(): UseConversationReturn {
 
       // Sync messages to Supabase (best-effort batch insert)
       try {
-        const localMessages = getMessagesByConversation(db, conversationIdRef.current);
+        const localMessages = getMessagesByConversation(db, convId);
         if (localMessages.length > 0) {
           const { error: syncError } = await supabase.from('messages').upsert(
             localMessages.map((m) => ({
@@ -467,9 +470,57 @@ export function useConversation(): UseConversationReturn {
             );
           }
         }
+
+        // Sync conversation to Supabase
+        const userId = profile?.id;
+        if (userId) {
+          await supabase.from('conversations').upsert({
+            id: convId,
+            user_id: userId,
+            status: 'ended',
+            mode,
+            topic_category: topicCategory,
+            topic_prompt: topicPrompt,
+            started_at: startedAtRef.current
+              ? new Date(startedAtRef.current).toISOString()
+              : now,
+            ended_at: now,
+            duration_seconds: durationSeconds,
+          });
+        }
       } catch {
         // Sync failure is non-fatal — messages are still in SQLite
       }
+
+      // Create local blog_post record with status 'generating'
+      const blogPostId = uuidv4();
+      try {
+        insertBlogPost(db, {
+          id: blogPostId,
+          conversation_id: convId,
+          title: '',
+          content: '',
+          summary: null,
+          tags: '[]',
+          share_slug: null,
+          share_enabled: 0,
+          status: 'generating',
+          generated_at: null,
+          edited_at: null,
+          synced_at: null,
+        });
+      } catch {
+        // Blog post insert failure is non-fatal
+      }
+
+      // Fire-and-forget: invoke blog generation edge function
+      supabase.functions
+        .invoke('generate-blog-post', {
+          body: { conversation_id: convId },
+        })
+        .catch(() => {
+          // Edge function failure is non-fatal — handled by sync layer
+        });
 
       setPhase('ended');
     } catch (err) {
@@ -477,7 +528,7 @@ export function useConversation(): UseConversationReturn {
       setError(`Failed to end conversation: ${message}`);
       setPhase('ended');
     }
-  }, [phase, mode, duration, db]);
+  }, [phase, mode, duration, db, topicPrompt, topicCategory, profile]);
 
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {

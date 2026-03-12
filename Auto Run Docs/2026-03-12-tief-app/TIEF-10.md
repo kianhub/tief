@@ -84,7 +84,9 @@ Use these tools proactively throughout this phase:
 
 Use `expo-haptics` `impactAsync(Medium)` when conversation starts.
 
-- [ ] **Create the end-of-conversation modal and blog generation trigger.** Create `src/components/conversation/EndConversationModal.tsx`:
+- [x] **Create the end-of-conversation modal and blog generation trigger.** Create `src/components/conversation/EndConversationModal.tsx`:
+
+> Completed: Created `EndConversationModal` component with warm semi-transparent overlay (light/dark adaptive), `gentle` spring card animation (translateY + scale), serif "Great conversation." title, body text about background blog generation, "Go to Home →" primary button, and "Keep talking" ghost link. Updated `endConversation()` in `useConversation` hook to: sync conversation to Supabase with `upsert`, create local `blog_posts` record with status `'generating'`, and fire-and-forget invoke `generate-blog-post` edge function. Replaced inline `EndConfirmationOverlay` placeholder in `[id].tsx` with the new modal. `npx tsc --noEmit` passes.
 
 Per spec §4.5 — this is a warm confirmation, NOT a standard alert dialog:
 

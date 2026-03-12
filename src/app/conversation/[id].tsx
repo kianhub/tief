@@ -21,6 +21,7 @@ import { useDatabase } from '@/lib/db-context';
 import { getConversation as getConversationRecord } from '@/lib/db-helpers';
 import { VoiceConversationView } from '@/components/conversation/VoiceConversationView';
 import { TextConversationView } from '@/components/conversation/TextConversationView';
+import { EndConversationModal } from '@/components/conversation/EndConversationModal';
 import type { ConversationMode, TopicCategory } from '@/types';
 
 export default function ConversationScreen() {
@@ -222,137 +223,17 @@ export default function ConversationScreen() {
         )}
       </Animated.View>
 
-      {/* End confirmation — placeholder until EndConversationModal is built */}
-      {showEndModal && (
-        <EndConfirmationOverlay
-          onConfirm={handleConfirmEnd}
-          onCancel={handleCancelEnd}
-        />
-      )}
+      <EndConversationModal
+        visible={showEndModal}
+        onConfirm={handleConfirmEnd}
+        onCancel={handleCancelEnd}
+      />
     </View>
-  );
-}
-
-// Minimal end confirmation until the full EndConversationModal component is created (TIEF-10 task 2)
-function EndConfirmationOverlay({
-  onConfirm,
-  onCancel,
-}: {
-  onConfirm: () => void;
-  onCancel: () => void;
-}) {
-  const { colors, typography, spacing, radii, springs } = useTheme();
-  const scale = useSharedValue(0.9);
-  const opacity = useSharedValue(0);
-
-  useEffect(() => {
-    opacity.value = withTiming(1, { duration: 200 });
-    scale.value = withTiming(1, { duration: 300 });
-  }, []);
-
-  const overlayStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
-
-  const cardStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-    opacity: opacity.value,
-  }));
-
-  return (
-    <Animated.View style={[styles.overlay, overlayStyle]}>
-      <Animated.View
-        style={[
-          styles.modalCard,
-          {
-            backgroundColor: colors.surface,
-            borderRadius: radii.lg,
-            padding: spacing.lg,
-          },
-          cardStyle,
-        ]}
-      >
-        <Animated.Text
-          style={[
-            {
-              ...typography.title,
-              color: colors.textPrimary,
-              textAlign: 'center',
-              marginBottom: spacing.sm,
-            },
-          ]}
-        >
-          End this conversation?
-        </Animated.Text>
-        <Animated.Text
-          style={[
-            {
-              ...typography.body,
-              color: colors.textSecondary,
-              textAlign: 'center',
-              marginBottom: spacing.lg,
-            },
-          ]}
-        >
-          Your post will be generated in the background.
-        </Animated.Text>
-
-        <Animated.View style={styles.modalButtons}>
-          <Animated.Text
-            onPress={onConfirm}
-            style={[
-              styles.modalPrimary,
-              {
-                ...typography.ui,
-                color: '#FFFFFF',
-                backgroundColor: colors.accent,
-                borderRadius: radii.sm,
-                overflow: 'hidden',
-                paddingVertical: spacing.md,
-                textAlign: 'center',
-              },
-            ]}
-          >
-            End & Go Home
-          </Animated.Text>
-          <Animated.Text
-            onPress={onCancel}
-            style={[
-              {
-                ...typography.ui,
-                color: colors.textSecondary,
-                textAlign: 'center',
-                paddingVertical: spacing.sm,
-              },
-            ]}
-          >
-            Keep talking
-          </Animated.Text>
-        </Animated.View>
-      </Animated.View>
-    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(44, 40, 37, 0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 32,
-  },
-  modalCard: {
-    width: '100%',
-    maxWidth: 340,
-  },
-  modalButtons: {
-    gap: 8,
-  },
-  modalPrimary: {
-    overflow: 'hidden',
   },
 });
