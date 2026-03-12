@@ -11,6 +11,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   FadeIn,
+  FadeInDown,
   FadeOut,
   useAnimatedStyle,
   useSharedValue,
@@ -71,7 +72,7 @@ export default function LibraryScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const db = useDatabase();
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography, radii, springs } = useTheme();
   const { isSyncing, syncNow, error: syncError } = useSync();
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -173,7 +174,17 @@ export default function LibraryScreen() {
       {/* Header */}
       <View style={styles.header}>
         {searchMode ? (
-          <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(150)} style={styles.searchRow}>
+          <Animated.View
+            entering={FadeIn.springify()
+              .damping(springs.snappy.damping)
+              .stiffness(springs.snappy.stiffness)
+              .mass(springs.snappy.mass)}
+            exiting={FadeOut.springify()
+              .damping(springs.snappy.damping)
+              .stiffness(springs.snappy.stiffness)
+              .mass(springs.snappy.mass)}
+            style={styles.searchRow}
+          >
             <RNTextInput
               ref={searchInputRef}
               value={searchQuery}
@@ -248,8 +259,15 @@ export default function LibraryScreen() {
             </ThemedText>
           </View>
         )}
-        renderItem={({ item }) => (
-          <BlogCard post={item} onPress={() => handlePostPress(item.id)} />
+        renderItem={({ item, index }) => (
+          <Animated.View
+            entering={FadeInDown.delay(index * 50)
+              .springify()
+              .damping(20)
+              .stiffness(200)}
+          >
+            <BlogCard post={item} onPress={() => handlePostPress(item.id)} />
+          </Animated.View>
         )}
         stickySectionHeadersEnabled
         contentContainerStyle={[

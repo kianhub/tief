@@ -1,5 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
 import { useOnboarding, type NotificationTime } from '@/lib/onboarding-context';
@@ -26,7 +27,7 @@ const FREQUENCY_OPTIONS: { value: NotificationFrequency; label: string }[] = [
 
 export default function NotificationsScreen() {
   const router = useRouter();
-  const { colors, spacing, radii } = useTheme();
+  const { colors, spacing, radii, springs } = useTheme();
   const {
     notificationTimes,
     setNotificationTimes,
@@ -50,11 +51,25 @@ export default function NotificationsScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <ThemedText variant="title" style={styles.title}>
-          When should we start a conversation?
-        </ThemedText>
+        <Animated.View
+          entering={FadeIn.springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+        >
+          <ThemedText variant="title" style={styles.title}>
+            When should we start a conversation?
+          </ThemedText>
+        </Animated.View>
 
-        <View style={styles.timeSlotsSection}>
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+          style={styles.timeSlotsSection}
+        >
           {notificationTimes.map((slot, index) => (
             <View
               key={slot.label}
@@ -86,9 +101,16 @@ export default function NotificationsScreen() {
               />
             </View>
           ))}
-        </View>
+        </Animated.View>
 
-        <View style={styles.frequencySection}>
+        <Animated.View
+          entering={FadeInDown.delay(400)
+            .springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+          style={styles.frequencySection}
+        >
           <ThemedText variant="ui" style={styles.frequencyLabel}>
             How often?
           </ThemedText>
@@ -122,7 +144,7 @@ export default function NotificationsScreen() {
               <ThemedText variant="body">{option.label}</ThemedText>
             </Pressable>
           ))}
-        </View>
+        </Animated.View>
       </ScrollView>
 
       <View style={[styles.footer, { paddingHorizontal: spacing.contentPadding }]}>

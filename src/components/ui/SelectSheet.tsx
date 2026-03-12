@@ -46,7 +46,10 @@ export function SelectSheet<T>({
             .damping(springs.gentle.damping)
             .stiffness(springs.gentle.stiffness)
             .mass(springs.gentle.mass)}
-          exiting={SlideOutDown.duration(200)}
+          exiting={SlideOutDown.springify()
+            .damping(springs.snappy.damping)
+            .stiffness(springs.snappy.stiffness)
+            .mass(springs.snappy.mass)}
           style={[
             styles.sheet,
             {

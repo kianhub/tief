@@ -10,14 +10,20 @@ export interface SyncBannerProps {
 }
 
 export function SyncBanner({ visible, onRetry }: SyncBannerProps) {
-  const { colors, radii, spacing } = useTheme();
+  const { colors, radii, spacing, springs } = useTheme();
 
   if (!visible) return null;
 
   return (
     <Animated.View
-      entering={FadeInUp.duration(250)}
-      exiting={FadeOutUp.duration(200)}
+      entering={FadeInUp.springify()
+        .damping(springs.gentle.damping)
+        .stiffness(springs.gentle.stiffness)
+        .mass(springs.gentle.mass)}
+      exiting={FadeOutUp.springify()
+        .damping(springs.snappy.damping)
+        .stiffness(springs.snappy.stiffness)
+        .mass(springs.snappy.mass)}
       style={[
         styles.banner,
         {

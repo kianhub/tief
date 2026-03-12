@@ -33,7 +33,7 @@ export default function PostViewScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const db = useDatabase();
-  const { colors, typography, spacing, radii } = useTheme();
+  const { colors, typography, spacing, radii, springs } = useTheme();
 
   const [post, setPost] = useState<BlogPost | null>(null);
   const [conversation, setConversation] = useState<Conversation | null>(null);
@@ -294,7 +294,10 @@ export default function PostViewScreen() {
 
         {/* Title section */}
         <Animated.View
-          entering={FadeIn.duration(400)}
+          entering={FadeIn.springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
           style={[styles.titleSection, { maxWidth: 640, alignSelf: 'center', width: '100%' }]}
         >
           <ThemedText variant="display" style={styles.postTitle}>

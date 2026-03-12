@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
 
@@ -86,7 +86,11 @@ export default function RootLayout() {
           <SyncProvider>
             <ElevenLabsProvider>
               <SplashGate>
-                <Slot />
+                <Stack screenOptions={{
+                  headerShown: false,
+                  animation: 'slide_from_right',
+                  animationDuration: 250,
+                }} />
               </SplashGate>
             </ElevenLabsProvider>
           </SyncProvider>

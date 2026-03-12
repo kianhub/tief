@@ -18,7 +18,7 @@ export default function AuthLayout() {
 
   return (
     <ThemedView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right', animationDuration: 250 }} />
     </ThemedView>
   );
 }

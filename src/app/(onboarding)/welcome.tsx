@@ -26,7 +26,7 @@ export default function WelcomeScreen() {
       </Animated.View>
 
       <Animated.View
-        entering={FadeIn.delay(400).duration(600)}
+        entering={FadeIn.delay(400).springify().damping(20).stiffness(80)}
         style={[styles.footer, { paddingHorizontal: spacing.contentPadding }]}
       >
         <Button

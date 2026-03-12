@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
 import { useOnboarding } from '@/lib/onboarding-context';
@@ -8,7 +9,7 @@ import { CATEGORIES, type TopicCategory } from '@/constants/categories';
 
 export default function InterestsScreen() {
   const router = useRouter();
-  const { spacing } = useTheme();
+  const { spacing, springs } = useTheme();
   const { interests, setInterests } = useOnboarding();
 
   const toggleCategory = (id: TopicCategory) => {
@@ -30,15 +31,29 @@ export default function InterestsScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <ThemedText variant="title" style={styles.title}>
-          What do you like talking about?
-        </ThemedText>
+        <Animated.View
+          entering={FadeIn.springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+        >
+          <ThemedText variant="title" style={styles.title}>
+            What do you like talking about?
+          </ThemedText>
 
-        <ThemedText variant="body" color="secondary" style={styles.subtitle}>
-          Tap all that interest you:
-        </ThemedText>
+          <ThemedText variant="body" color="secondary" style={styles.subtitle}>
+            Tap all that interest you:
+          </ThemedText>
+        </Animated.View>
 
-        <View style={styles.chipGrid}>
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+          style={styles.chipGrid}
+        >
           {CATEGORIES.map((cat) => (
             <Chip
               key={cat.id}
@@ -49,11 +64,18 @@ export default function InterestsScreen() {
               style={styles.chip}
             />
           ))}
-        </View>
+        </Animated.View>
 
-        <ThemedText variant="caption" color="tertiary" style={styles.hint}>
-          You can change these anytime
-        </ThemedText>
+        <Animated.View
+          entering={FadeIn.delay(400).springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+        >
+          <ThemedText variant="caption" color="tertiary" style={styles.hint}>
+            You can change these anytime
+          </ThemedText>
+        </Animated.View>
       </ScrollView>
 
       <View style={[styles.footer, { paddingHorizontal: spacing.contentPadding }]}>

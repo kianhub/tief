@@ -18,7 +18,7 @@ export function Card({ onPress, style, children, ...rest }: CardProps) {
   }));
 
   const handlePressIn = () => {
-    scale.value = withSpring(0.97, springs.snappy);
+    scale.value = withSpring(0.98, springs.snappy);
   };
 
   const handlePressOut = () => {

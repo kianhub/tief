@@ -3,6 +3,7 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { ThemedText } from './ThemedText';
 import { Button } from './Button';
+import { useTheme } from '@/hooks/useTheme';
 
 export interface ErrorStateProps {
   message: string;
@@ -10,8 +11,16 @@ export interface ErrorStateProps {
 }
 
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
+  const { springs } = useTheme();
+
   return (
-    <Animated.View entering={FadeIn.duration(300)} style={styles.container}>
+    <Animated.View
+      entering={FadeIn.springify()
+        .damping(springs.gentle.damping)
+        .stiffness(springs.gentle.stiffness)
+        .mass(springs.gentle.mass)}
+      style={styles.container}
+    >
       <ThemedText variant="body" color="secondary" style={styles.message}>
         {message}
       </ThemedText>

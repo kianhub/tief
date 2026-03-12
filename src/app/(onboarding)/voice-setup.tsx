@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { requestRecordingPermissionsAsync } from 'expo-audio';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { useTheme } from '@/hooks/useTheme';
 import { useOnboarding } from '@/lib/onboarding-context';
@@ -14,7 +15,7 @@ import { VOICES } from '@/constants/voices';
 
 export default function VoiceSetupScreen() {
   const router = useRouter();
-  const { colors, spacing, radii } = useTheme();
+  const { colors, spacing, radii, springs } = useTheme();
   const { user, refreshProfile } = useAuth();
   const db = useDatabase();
   const {
@@ -94,15 +95,29 @@ export default function VoiceSetupScreen() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <ThemedText variant="title" style={styles.title}>
-          How should I sound?
-        </ThemedText>
+        <Animated.View
+          entering={FadeIn.springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+        >
+          <ThemedText variant="title" style={styles.title}>
+            How should I sound?
+          </ThemedText>
 
-        <ThemedText variant="body" color="secondary" style={styles.subtitle}>
-          Pick a voice that feels right:
-        </ThemedText>
+          <ThemedText variant="body" color="secondary" style={styles.subtitle}>
+            Pick a voice that feels right:
+          </ThemedText>
+        </Animated.View>
 
-        <View style={styles.voiceGrid}>
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
+          style={styles.voiceGrid}
+        >
           {VOICES.map((voice) => {
             const isSelected = selectedVoiceId === voice.id;
             return (
@@ -144,39 +159,47 @@ export default function VoiceSetupScreen() {
               </Card>
             );
           })}
-        </View>
+        </Animated.View>
 
-        <ThemedText
-          variant="caption"
-          color="tertiary"
-          style={styles.micHint}
+        <Animated.View
+          entering={FadeInDown.delay(400)
+            .springify()
+            .damping(springs.gentle.damping)
+            .stiffness(springs.gentle.stiffness)
+            .mass(springs.gentle.mass)}
         >
-          We'll need microphone access for voice conversations. You can also
-          chat by text anytime.
-        </ThemedText>
-
-        <View style={styles.micButtons}>
-          <Button
-            variant="secondary"
-            size="md"
-            label="Allow Microphone"
-            onPress={handleAllowMicrophone}
-            style={styles.micButton}
-          />
-          <Button
-            variant="ghost"
-            size="md"
-            label="Maybe later — I'll use text"
-            onPress={handleSkipMicrophone}
-            style={styles.micButton}
-          />
-        </View>
-
-        {defaultMode === 'voice' && (
-          <ThemedText variant="caption" color="accent" style={styles.micGranted}>
-            ✓ Microphone access granted
+          <ThemedText
+            variant="caption"
+            color="tertiary"
+            style={styles.micHint}
+          >
+            We'll need microphone access for voice conversations. You can also
+            chat by text anytime.
           </ThemedText>
-        )}
+
+          <View style={styles.micButtons}>
+            <Button
+              variant="secondary"
+              size="md"
+              label="Allow Microphone"
+              onPress={handleAllowMicrophone}
+              style={styles.micButton}
+            />
+            <Button
+              variant="ghost"
+              size="md"
+              label="Maybe later — I'll use text"
+              onPress={handleSkipMicrophone}
+              style={styles.micButton}
+            />
+          </View>
+
+          {defaultMode === 'voice' && (
+            <ThemedText variant="caption" color="accent" style={styles.micGranted}>
+              ✓ Microphone access granted
+            </ThemedText>
+          )}
+        </Animated.View>
       </ScrollView>
 
       <View style={[styles.footer, { paddingHorizontal: spacing.contentPadding }]}>

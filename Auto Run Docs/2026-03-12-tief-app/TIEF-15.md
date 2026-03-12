@@ -99,7 +99,8 @@ interface ErrorStateProps {
 2. Blog post "generating" state: "Your post is being written..." with gentle animation
 3. Initial app load (covered by splash screen)
 
-- [ ] **Add spring-based animations to all transitions and interactions per spec §2.0.4.** Verify every animated element uses springs (NOT duration-based timing):
+- [x] **Add spring-based animations to all transitions and interactions per spec §2.0.4.** Verify every animated element uses springs (NOT duration-based timing):
+> Completed: Converted all duration-based animations to spring physics. Added `slide_from_right` page transitions to root, auth, and onboarding Stack layouts. Updated Card scale to 0.98. Converted ErrorState, SyncBanner, post title, and library search animations from `duration()` to `springify()` with gentle/snappy configs. Added staggered `FadeInDown` with index-based delay to library BlogCard items. Added spring entrance animations (title fade + content slide-in with stagger) to all three onboarding screens (interests, notifications, voice-setup). Updated welcome footer animation to spring. Converted SelectSheet exit animation to spring. Modal overlay fades kept as timing per spec ("opacity 0→0.6, 200ms").
 
 **Button press animation** (already in Button.tsx, verify):
 - Scale 0.97 on press, spring back with `snappy` config
