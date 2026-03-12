@@ -153,7 +153,7 @@ This runs as a daily cron job. It generates conversation starter prompts for eac
 
 Use `supabaseAdmin` (service role client) since this is a server-to-server function.
 
-- [ ] **Create `supabase/functions/dispatch-notifications/index.ts` and `supabase/functions/export-blog-markdown/index.ts`.**
+- [x] **Create `supabase/functions/dispatch-notifications/index.ts` and `supabase/functions/export-blog-markdown/index.ts`.** ✅ Both functions created. `dispatch-notifications` queries pending notification_log entries and sends via Expo Push API, handling invalid tokens by clearing them. `export-blog-markdown` authenticates user, verifies ownership, and returns formatted markdown with Content-Type: text/markdown. Also added `expo_push_token` to Profile type and useractions setup doc.
 
 **`dispatch-notifications/index.ts`** per spec §3.5 Edge Function #3:
 - Runs every 15 minutes via cron

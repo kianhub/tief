@@ -89,6 +89,7 @@ export interface Profile {
   notification_frequency: NotificationFrequency;
   timezone: string;
   onboarding_completed: boolean;
+  expo_push_token: string | null;
   created_at: string;
   updated_at: string;
 }

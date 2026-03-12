@@ -51,6 +51,10 @@ Complete each step in order. The schema and RLS policies are defined in `tief-pr
   - The schema creates these tables: `profiles`, `conversations`, `messages`, `blog_posts`, `prompt_bank`, `notification_log`
   - Paste the SQL into the editor and click **Run**
   - Verify all tables appear under **Table Editor**
+  - Add the `expo_push_token` column to the `profiles` table (required for push notifications):
+    ```sql
+    ALTER TABLE profiles ADD COLUMN IF NOT EXISTS expo_push_token TEXT;
+    ```
 
 - [ ] **5. Enable RLS policies**
   - The RLS policies are included at the bottom of the §3.5 schema SQL
