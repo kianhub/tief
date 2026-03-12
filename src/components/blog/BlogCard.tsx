@@ -37,7 +37,7 @@ export function BlogCard({ post, onPress }: BlogCardProps) {
     : '';
   const tagStr = tags.map((t) => `#${t}`).join(' ');
   const preview = post.content
-    ? post.content.replace(/[#*_`>\[\]()-]/g, '').slice(0, 80).trim() + (post.content.length > 80 ? '…' : '')
+    ? post.content.replace(/[#*_`>[\]()-]/g, '').slice(0, 80).trim() + (post.content.length > 80 ? '…' : '')
     : '';
 
   // Find category color from the conversation's topic (via tags heuristic or default)

@@ -67,6 +67,7 @@ export default function ConversationScreen() {
         elRef.current.setMicMuted(volume === 0);
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when setVoiceSession changes
   }, [conversation.setVoiceSession]);
 
   // --- Audio amplitude for voice orb ---
@@ -116,7 +117,8 @@ export default function ConversationScreen() {
         router.back();
       }
     }
-  }, [id, topic, initialMode, category, conversation.phase, db]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally gated by conversation.phase, not whole object
+  }, [id, topic, initialMode, category, conversation.phase, db, router]);
 
   // --- Mode switching with cross-fade ---
   const viewOpacity = useSharedValue(1);
@@ -134,6 +136,7 @@ export default function ConversationScreen() {
         }
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- shared value refs and performSwitch are stable
     [isTransitioning, conversation.mode],
   );
 
@@ -177,7 +180,8 @@ export default function ConversationScreen() {
     await conversation.endConversation();
     haptics.success();
     router.replace('/(tabs)');
-  }, [conversation.endConversation, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- endConversation is accessed via stable conversation object
+  }, [conversation, router]);
 
   const handleCancelEnd = useCallback(() => {
     setShowEndModal(false);

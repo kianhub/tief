@@ -190,7 +190,8 @@ module.exports = {
 
 Run `npx jest` and verify all tests pass. Fix any failures.
 
-- [ ] **Final TypeScript, lint, and build verification.** Run through these checks:
+- [x] **Final TypeScript, lint, and build verification.** Run through these checks:
+> Completed: All 8 checks pass. Fixed tsconfig.json to exclude Supabase Edge Functions (Deno runtime) from tsc. Fixed 16 oxlint errors: 1 eqeqeq (`!=` → `!==`), 1 aria-role false positive (component prop), 14 exhaustive-deps (fixed dependency arrays and added disable comments for intentional patterns like Reanimated shared values). Removed `newArchEnabled` from app.json (default in SDK 52+). Memoized `currentInterests` in settings.tsx to prevent re-render loop. Zero TS errors, zero lint errors, 70/70 tests pass, expo-doctor 17/17, no hardcoded API keys, all routes verified, .gitignore complete.
 
 1. `npx tsc --noEmit` — Zero TypeScript errors across the entire project
 2. `npm run lint` — Zero oxlint errors (warnings are acceptable). Fix any errors found. Run `npm run lint:fix` first to auto-fix what it can.

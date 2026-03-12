@@ -111,6 +111,7 @@ export function TextConversationView({
 
   const listFooter = hasStreaming ? (
     <ChatBubble
+      // eslint-disable-next-line jsx-a11y/aria-role -- component prop, not ARIA
       role="assistant"
       content={currentStreamingText}
       isStreaming

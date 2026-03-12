@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
   FadeIn,
   useAnimatedStyle,
@@ -36,7 +36,8 @@ export function EndConversationModal({
       translateY.value = 40;
       scale.value = 0.95;
     }
-  }, [visible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- shared values are refs, springs is stable
+  }, [visible, springs.gentle]);
 
   const cardAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }, { scale: scale.value }],

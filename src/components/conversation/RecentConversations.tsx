@@ -78,7 +78,7 @@ export function RecentConversations({ conversations, onPress }: RecentConversati
                 <ThemedText variant="caption" color="secondary">
                   {formatRelativeTime(convo.started_at)}
                 </ThemedText>
-                {convo.duration_seconds != null && convo.duration_seconds > 0 && (
+                {convo.duration_seconds !== null && convo.duration_seconds !== undefined && convo.duration_seconds > 0 && (
                   <ThemedText variant="caption" color="secondary">
                     {' · '}{formatDuration(convo.duration_seconds)}
                   </ThemedText>

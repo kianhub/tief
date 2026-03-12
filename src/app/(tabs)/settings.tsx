@@ -80,7 +80,7 @@ export default function SettingsScreen() {
   const currentTone: BlogTone = profile?.blog_tone ?? 'auto';
   const currentFrequency: NotificationFrequency = profile?.notification_frequency ?? 'daily';
   const currentVoice = profile?.voice_preference ?? 'voice_placeholder_1';
-  const currentInterests = profile?.topic_interests ?? [];
+  const currentInterests = useMemo(() => profile?.topic_interests ?? [], [profile?.topic_interests]);
   const currentMode = (getPreference(db, 'default_mode') as 'voice' | 'text') ?? 'text';
   const currentNotifTimes = profile?.notification_times ?? [];
 

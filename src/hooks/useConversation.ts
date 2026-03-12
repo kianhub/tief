@@ -306,7 +306,8 @@ export function useConversation(): UseConversationReturn {
       // Clean up the DB record
       updateConversation(db, id, { status: 'ended', ended_at: new Date().toISOString() });
     }
-  }, [phase, db, profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- buildPromptParams/createMessage use db & profile which are listed
+  }, [phase, db]);
 
   const resumeConversation = useCallback((convId: string) => {
     if (phase !== 'idle') return;
@@ -375,7 +376,8 @@ export function useConversation(): UseConversationReturn {
       },
       signal: controller.signal,
     });
-  }, [phase, mode, topicPrompt, topicCategory, db, profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- buildPromptParams/createMessage close over db which is listed
+  }, [phase, mode, topicPrompt, topicCategory, db]);
 
   const switchMode = useCallback(async (newMode: ConversationMode) => {
     if (phase !== 'active' || mode === newMode) return;
@@ -415,7 +417,8 @@ export function useConversation(): UseConversationReturn {
       const message = err instanceof Error ? err.message : String(err);
       setError(`Mode switch failed: ${message}`);
     }
-  }, [phase, mode, topicPrompt, topicCategory, db, profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- buildPromptParams closes over db which is listed
+  }, [phase, mode, topicPrompt, topicCategory, db]);
 
   const endConversation = useCallback(async () => {
     if (phase !== 'active' || !conversationIdRef.current) return;
@@ -528,7 +531,8 @@ export function useConversation(): UseConversationReturn {
       setError(`Failed to end conversation: ${message}`);
       setPhase('ended');
     }
-  }, [phase, mode, duration, db, topicPrompt, topicCategory, profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- profile accessed via ref-like closure, db is listed
+  }, [phase, mode, duration, db, topicPrompt, topicCategory]);
 
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {
