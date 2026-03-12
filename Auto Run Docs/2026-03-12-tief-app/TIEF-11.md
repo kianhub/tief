@@ -69,7 +69,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 Add CORS headers for the Expo client.
 
-- [ ] **Create `supabase/functions/generate-blog-post/index.ts` — Blog post generation from conversation transcript.** Per spec §3.5 Edge Function #1:
+- [x] **Create `supabase/functions/generate-blog-post/index.ts` — Blog post generation from conversation transcript.** Per spec §3.5 Edge Function #1:
 
 **Request:** POST with body `{ conversation_id: string }`
 **Auth:** Bearer token OR service role key (can be triggered by webhook)
