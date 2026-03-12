@@ -97,7 +97,7 @@ Implementation:
 
 **`buildTextSystemPrompt(params: PromptParams)`** — Reuses the same prompt template from elevenlabs.ts. Extract the shared `buildSystemPrompt` into a common module (`src/lib/prompt-builder.ts`) and import it in both `elevenlabs.ts` and `claude.ts`.
 
-- [ ] **Create the unified `useConversation` hook at `src/hooks/useConversation.ts`.** This is the central state machine for conversations:
+- [x] **Create the unified `useConversation` hook at `src/hooks/useConversation.ts`.** This is the central state machine for conversations:
 
 ```typescript
 type ConversationPhase = 'idle' | 'starting' | 'active' | 'ending' | 'ended';
