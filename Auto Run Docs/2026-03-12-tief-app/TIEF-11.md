@@ -131,7 +131,7 @@ Add CORS headers for the Expo client.
 
 **Error handling:** If Claude API fails, set blog status to 'generating' still (can be retried). Log the error.
 
-- [ ] **Create `supabase/functions/generate-prompts/index.ts` — Daily personalized prompt generation.** Per spec §3.5 Edge Function #2:
+- [x] **Create `supabase/functions/generate-prompts/index.ts` — Daily personalized prompt generation.** Per spec §3.5 Edge Function #2:
 
 This runs as a daily cron job. It generates conversation starter prompts for each active user.
 
